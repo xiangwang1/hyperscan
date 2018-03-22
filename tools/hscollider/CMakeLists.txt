@@ -66,7 +66,6 @@ set_source_files_properties(${hscollider_SOURCES} PROPERTIES
     INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(hscollider ${hscollider_SOURCES})
 add_dependencies(hscollider ragel_ColliderCorporaParser)
-add_dependencies(hscollider pcre)
 
 if(NOT WIN32)
     target_link_libraries(hscollider hs ${PCRE_LDFLAGS} databaseutil
