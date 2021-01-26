@@ -2,6 +2,111 @@
 
 This is a list of notable changes to Hyperscan, in reverse chronological order.
 
+## [5.4.0] 2020-12-31
+- Improvement on literal matcher "Fat Teddy" performance, including
+  support for Intel(R) AVX-512 Vector Byte Manipulation Instructions (Intel(R)
+  AVX-512 VBMI).
+- Introduce a new 32-state shuffle-based DFA engine ("Sheng32"). This improves
+  scanning performance by leveraging AVX-512 VBMI.
+- Introduce a new 64-state shuffle-based DFA engine ("Sheng64"). This improves
+  scanning performance by leveraging AVX-512 VBMI.
+- Introduce a new shuffle-based hybrid DFA engine ("McSheng64"). This improves
+  scanning performance by leveraging AVX-512 VBMI.
+- Improvement on exceptional state handling performance for LimEx NFA, including
+  support for AVX-512 VBMI.
+- Improvement on lookaround performance with new models, including support for
+  AVX-512.
+- Improvement on DFA state space efficiency.
+- Optimization on decision of NFA/DFA generation.
+- hsbench: add CSV dump support for hsbench.
+- Bugfix for cmake error on Icelake under release mode.
+- Bugfix in find_vertices_in_cycles() to avoid self-loop checking in SCC.
+- Bugfix for issue #270: fix return value handling in chimera.
+- Bugfix for issue #284: use correct free function in logical combination.
+- Add BUILD_EXAMPLES cmake option to enable example code compilation. (#260)
+- Some typo fixing. (#242, #259)
+
+## [5.3.0] 2020-05-15
+- Improvement on literal matcher "Teddy" performance, including support for
+  Intel(R) AVX-512 Vector Byte Manipulation Instructions (Intel(R) AVX-512
+  VBMI).
+- Improvement on single-byte/two-byte matching performance, including support
+  for Intel(R) Advanced Vector Extensions 512 (Intel(R) AVX-512).
+- hsbench: add hyphen support for -T option.
+- tools/fuzz: add test scripts for synthetic pattern generation.
+- Bugfix for acceleration path analysis in LimEx NFA.
+- Bugfix for duplicate matches for Small-write engine.
+- Bugfix for UTF8 checking problem for hscollider.
+- Bugfix for issue #205: avoid crash of `hs_compile_lit_multi()` with clang and
+  ASAN.
+- Bugfix for issue #211: fix error in `db_check_platform()` function.
+- Bugfix for issue #217: fix cmake parsing issue of CPU arch for non-English
+  locale.
+- Bugfix for issue #228: avoid undefined behavior when calling `close()` after
+  `fdopendir()` in `loadExpressions()`.
+- Bugfix for issue #239: fix hyperscan compile issue under gcc-10.
+- Add VLAN packets processing capability in pcap analysis script. (#214)
+- Avoid extra convert instruction for "Noodle". (#221)
+- Add Hyperscan version marcro in `hs.h`. (#222)
+
+## [5.2.1] 2019-10-13
+- Bugfix for issue #186: fix compile issue when `BUILD_SHARED_LIBS` is on in
+  release mode.
+- Disable redundant move check for older compiler versions.
+
+## [5.2.0] 2019-07-12
+- Literal API: add new API `hs_compile_lit()` and `hs_compile_lit_multi()` to
+  process pure literal rule sets. The 2 literal APIs treat each expression text
+  in a literal sense without recognizing any regular grammers.
+- Logical combination: add support for purely negative combinations, which
+  report match at EOD in case of no sub-expressions matched.
+- Windows porting: support shared library (DLL) on Windows with available tools
+  hscheck, hsbench and hsdump.
+- Bugfix for issue #148: fix uninitialized use of `scatter_unit_uX` due to
+  padding.
+- Bugfix for issue #155: fix numerical result out of range error.
+- Bugfix for issue #165: avoid corruption of pending combination report in
+  streaming mode.
+- Bugfix for issue #174: fix scratch free issue when memory allocation fails.
+
+## [5.1.1] 2019-04-03
+- Add extra detection and handling when invalid rose programs are triggered.
+- Bugfix for issue #136: fix CMake parsing of CPU architecure for GCC-9.
+- Bugfix for issue #137: avoid file path impact on fat runtime build.
+- Bugfix for issue #141: fix rose literal programs for multi-pattern
+  matching when no pattern ids are provided.
+- Bugfix for issue #144: fix library install path in pkg-config files.
+
+## [5.1.0] 2019-01-17
+- Improve DFA state compression by wide-state optimization to reduce bytecode
+  size.
+- Create specific interpreter runtime handling to boost the performance of pure
+  literal matching.
+- Optimize original presentation of interpreter (the "Rose" engine ) to
+  increase overall performance.
+- Bugfix for logical combinations: fix error reporting combination's match in
+  case of sub-expression has EOD match under streaming mode.
+- Bugfix for logical combinations: fix miss reporting combination's match under
+  vacuous input.
+- Bugfix for issue #104: fix compile error with Boost 1.68.0.
+- Bugfix for issue #127: avoid pcre error for hscollider with installed PCRE
+  package.
+- Update version of PCRE used by testing tools as a syntax and semantic
+  reference to PCRE 8.41 or above.
+- Fix github repo address in doc.
+
+## [5.0.0] 2018-07-09
+- Introduce chimera hybrid engine of Hyperscan and PCRE, to fully support
+  PCRE syntax as well as to take advantage of the high performance nature of
+  Hyperscan.
+- New API feature: logical combinations (AND, OR and NOT) of patterns in a
+  given pattern set.
+- Windows porting: hsbench, hscheck, hscollider and hsdump tools now available
+  on Windows 8 or newer.
+- Improve undirected graph implementation to avoid graph copy and reduce
+  compile time.
+- Bugfix for issue #86: enable hscollider for installed PCRE package.
+
 ## [4.7.0] 2018-01-24
 - Introduced hscollider pattern testing tool, for validating Hyperscan match
   behaviour against PCRE.
